@@ -19,8 +19,7 @@ Struktura projekta
 
 U nastavku je prikazana struktura projekta:
 
-css
-
+```
 ├── src/
 │   ├── assets/
 │   │   ├── logo.png
@@ -54,6 +53,7 @@ css
 ├── .gitignore
 ├── package.json
 └── README.md
+```
 
     src/components/: Direktorij koji sadrži reusable komponente.
     src/pages/: Direktorij koji sadrži komponente za svaku stranicu aplikacije.
