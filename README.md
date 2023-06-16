@@ -47,7 +47,7 @@ U nastavku je prikazana struktura projekta:
 │   ├── styles/
 │   │   ├── main.scss
 │   │   └── ...
-│   ├── App.js
+│   ├── AppLayout.js
 │   └── index.js
 ├── public/
 ├── .gitignore
@@ -60,7 +60,7 @@ U nastavku je prikazana struktura projekta:
     src/store/: Direktorij koji sadrži akcije, reducere i konfiguraciju Redux Toolkit-a.
     src/services/: Direktorij koji sadrži HTTP servise za komunikaciju s API-jem.
     src/styles/: Direktorij koji sadrži stilove aplikacije.
-    src/App.js: Glavna komponenta aplikacije koja definise rutiranje.
+    src/AppLayout.js: Glavna komponenta aplikacije koja definise rutiranje.
     src/index.js: Glavna datoteka koja inicijalizira React aplikaciju.
     public/: Direktorij koji sadrži javne datoteke poput index.html i ostale statičke resurse.
     .gitignore: Datoteka koja definira koje datoteke
