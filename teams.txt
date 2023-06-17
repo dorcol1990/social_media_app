@@ -1,29 +1,21 @@
 TEAM 1
-1. Čedomir
-2. Branimir Dj.
-3. Nemanja
-4. Aleksandar Kremic
+Čedomir
+Branimir Dj.
+Nemanja
+Aleksandar Kremic
+Nikola Aleksic
+Zdenko
+Dzenad
+Milan Isailovic
 
 
 TEAM 2
-1. Nikola Aleksic
-2. Srdjan
-3. Pero Dukic
-4. Zdenko
-5. Dzenad
-
-
-TEAM 3
-1. Ahmed
-2. Vladimir
-3. Drago
-4. Adnan
-
-
-TEAM 4
-1. Zdravko
-2. Bojan Ilic
-3. Rade
-4. Milan Isailovic
-5. Aleksandar Milojevic
-
+Ahmed
+Vladimir
+Drago
+Adnan
+Zdravko
+Bojan Ilic
+Rade
+Aleksandar Milojevic
+Stevan Stevanovic
