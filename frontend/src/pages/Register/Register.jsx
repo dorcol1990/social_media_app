@@ -54,7 +54,7 @@ function Register() {
 								toast.warning('User already registered');
 							}
 						})
-						.catch((err) => console.log(err));
+						.catch((err) => toast.warning(err.response.data.msg));
 				})
 				.catch((err) => console.log(err));
 
