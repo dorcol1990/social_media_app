@@ -14,6 +14,7 @@ import Home from './pages/Home/Home';
 import Register from './pages/Register/Register';
 import Login from './pages/Login/Login';
 import Posts from './pages/Posts/Posts';
+import AuthGuarding from './utils/AuthGuarding';
 
 const router = createBrowserRouter([
 	{
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: '/posts',
-				element: <Posts />,
+				element: (
+					<AuthGuarding>
+						<Posts />
+					</AuthGuarding>
+				),
 			},
 			{
 				path: '/profile',
