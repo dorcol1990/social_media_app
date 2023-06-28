@@ -5,6 +5,7 @@ import { storeAllPosts } from '../../store/postsSlice';
 import Card from '../../components/Card/Card';
 import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../components/Pagination/Pagination';
+import LoadingAnim from '../../components/LoadingAnim/LoadingAnim';
 
 function Posts() {
 	const [isLoading, setIsLoading] = useState(true);
@@ -35,7 +36,7 @@ function Posts() {
 		<div className='flex mt-[30px]'>
 			<div className='w-[70%]'>
 				{isLoading ? (
-					<h2>Loading...</h2>
+					<LoadingAnim />
 				) : (
 					<>
 						<div className='grid grid-cols-3 gap-3'>
