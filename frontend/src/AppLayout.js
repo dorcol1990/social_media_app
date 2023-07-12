@@ -2,9 +2,9 @@ import {Outlet} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 
 
-function AppLayout() {
+const AppLayout = () => {
   return (
-    <div className="App">
+    <div className='p-[30px] bg-[#161616] text-white'>
         <Navbar />
         <Outlet />
     </div>
