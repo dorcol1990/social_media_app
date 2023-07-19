@@ -1,49 +1,122 @@
 import React from 'react'
+import {useFormik} from 'formik'
+import * as Yup from 'yup';
+import { FileParser } from '../../utils/FileParser';
 
 const Register = () => {
+
+  const VALID_TYPE = ['image/png', 'image/jpeg', 'image/jpg'];
+
+  const formik = useFormik ({
+    initialValues : {
+      firstName : '',
+      lastName : '',
+      email : '',
+      password : '',
+      gender : '',
+      image : '',
+      birthDate : '',
+    },
+    validationSchema: Yup.object({
+      firstName: Yup.string().required('field is required'),
+      lastName: Yup.string().required('field is required'),
+      email: Yup.string().required('field is required'),
+      password: Yup.string().required('field is required'),
+      gender: Yup.string().required('field is required'),
+      image: Yup.mixed().required('field is required')
+              .test('fileSize', 'wrong file size', (value)=> value.size < 2097152)
+              .test('fileType', 'wrong file type', (value)=> VALID_TYPE.includes(value.type)),
+      birthDate: Yup.string().required('field is required')
+    }),
+    onSubmit : (values) =>{
+
+        FileParser(values.image)
+        .then((res)=> console.log(res))
+        .catch((err)=> console.log(err))
+        //console.log(values);
+    }
+  });
+
+  const showError = (name)=>
+        !!formik.errors[name] &&
+        formik.touched[name];
+  
+
   return (
-    <div className='min-h-screen'>
-        <form className='flex flex-col w-[70%] p-[30px] border-primary border-2 rounded-md mt-[30px]'>
+    <div className='min-h-screen'> 
+        <form onSubmit={formik.handleSubmit} className='flex flex-col w-[70%] p-[30px] border-primary border-2 rounded-md mt-[30px]'>
+
             <input
-            className='bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary placeholder:text-[#8e9190] outline-none'
+            className={`bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary ${showError('firstName') ? 'placeholder-customRed' : 'placeholder-text-[#8e9190]'
+            } outline-none`}
             type='text'
             name='firstName'
-            placeholder='Insert name' />
+            value={formik.values.firstName}
+            onChange={formik.handleChange}
+            placeholder={showError('firstName') ? 'field is required' : 'Insert name'} />
 
             <input
-            className='bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary placeholder:text-[#8e9190] outline-none'
+            className={`bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary ${showError('lastName') ? 'placeholder-customRed' : 'placeholder-text-[#8e9190]'
+            } outline-none`}
             type='text'
             name='lastName'
-            placeholder='Insert last name' />
+            value={formik.values.lastName}
+            onChange={formik.handleChange}
+            placeholder={showError('lastName') ? 'field is required' : 'Insert last name'} />
 
             <input
-            className='bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary placeholder:text-[#8e9190] outline-none'
+            className={`bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary ${showError('email') ? 'placeholder-customRed' : 'placeholder-text-[#8e9190]'
+            } outline-none`}
             type='email'
             name='email'
-            placeholder='Insert email' />
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            placeholder={showError('email') ? 'field is required' : 'Insert email'} />
 
             <input
-            className='bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary placeholder:text-[#8e9190] outline-none'
+            className={`bg-[#161616] p-[5px] border-b-2 border-[#3d403f] mb-5 focus:border-primary ${showError('password') ? 'placeholder-customRed' : 'placeholder-text-[#8e9190]'
+            } outline-none`}
             type='password'
             name='password'
-            placeholder='Insert password' />
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            placeholder={showError('password') ? 'field is required' : 'Insert password'} />
 
-            <select name='gender' className='bg-[#161616] text-[#808080] w-[250PX] mb-5 outline-none'>
-              <option value='gender' defaultChecked>gender</option>
+            <div className='flex items-center mb-5'>
+            <select name='gender' value={formik.values.gender} onChange={formik.handleChange} className='bg-[#161616] text-[#808080] w-[250PX] outline-none'>
+              <option value=' ' defaultChecked>gender</option>
               <option value='male'>male</option>
               <option value='female'>female</option>
             </select>
+            <span className='text-customRed ml-[7px]'>
+            {formik.touched.gender && formik.errors.gender ? formik.errors.gender : null}
+            </span>
+            </div>
 
+            <div className='flex items-center mb-5'>
             <input
-            className='bg-[#161616] p-[5px] w-[250px] mb-5 text-[#808080] outline-none'
+            className='bg-[#161616] p-[5px] w-[250px]  text-[#808080] outline-none'
             type='file'
-            name='image' />
-
+            name='image'
+            onChange={(e)=>formik.setFieldValue(e.target.name, e.target.files[0])}
+            />
+            <span className='text-customRed ml-[7px]'>
+              {formik.touched.image && formik.errors.image ? formik.errors.image : null}
+            </span>
+            </div>
+            
+            <div className='flex items-center mb-[45px]'>
             <input
-            className='bg-gradient-to-r from-primary to-secondary mb-[45px] text-[#161616] p-1 w-[250px] outline-none rounded-sm font-medium'
+            className='bg-gradient-to-r from-primary to-secondary  text-[#161616] p-1 w-[250px] outline-none rounded-sm font-medium'
             type='date'
             name='birthDate'
+            value={formik.values.birthDate}
+            onChange={formik.handleChange}
             />
+            <span className='text-customRed ml-[7px]'>
+            {formik.touched.birthDate && formik.errors.birthDate ? formik.errors.birthDate : null}
+            </span>
+            </div>
 
             <button
             type='submit'
