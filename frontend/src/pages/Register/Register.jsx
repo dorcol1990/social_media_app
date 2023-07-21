@@ -2,10 +2,16 @@ import React from 'react'
 import {useFormik} from 'formik'
 import * as Yup from 'yup';
 import { FileParser } from '../../utils/FileParser';
+import UserService from '../../services/userService';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 const Register = () => {
 
   const VALID_TYPE = ['image/png', 'image/jpeg', 'image/jpg'];
+
+  const navigate = useNavigate();
 
   const formik = useFormik ({
     initialValues : {
@@ -31,8 +37,22 @@ const Register = () => {
     onSubmit : (values) =>{
 
         FileParser(values.image)
-        .then((res)=> console.log(res))
+        .then((res)=> {
+          UserService.registerUser({...values, image: res})
+            .then((data)=> {
+              if (data.status === 200){
+                  toast.success('user successfully registered')
+                  setTimeout(()=> navigate('/login'), 2000)
+              }else {
+                  toast.warning('user already registred')
+              }
+            })
+            .catch((err)=> console.log(err))
+            })
         .catch((err)=> console.log(err))
+
+
+        formik.resetForm();
         //console.log(values);
     }
   });
